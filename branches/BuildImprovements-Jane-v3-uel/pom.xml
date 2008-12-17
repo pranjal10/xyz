@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.glassfish.web</groupId>
     <artifactId>el</artifactId>
@@ -7,9 +6,9 @@
     <packaging>pom</packaging>
     <name>Expression Language related modules</name>
     <scm>
-        <connection>scm:svn:https://uel.dev.java.net/svn/uel/branches/BuildImprovements-Jane-v3-uel</connection>
-        <developerConnection>scm:svn:https://uel.dev.java.net/svn/uel/branches/BuildImprovements-Jane-v3-uel</developerConnection>
-        <url>https://uel.dev.java.net/svn/uel/branches/BuildImprovements-Jane-v3-uel</url>
+        <connection>scm:svn:https://uel.dev.java.net/svn/uel/tags/el-Jane</connection>
+        <developerConnection>scm:svn:https://uel.dev.java.net/svn/uel/tags/el-Jane</developerConnection>
+        <url>https://uel.dev.java.net/svn/uel/tags/el-Jane</url>
     </scm>
 
 
