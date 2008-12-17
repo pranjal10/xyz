@@ -6,8 +6,8 @@
     <packaging>pom</packaging>
     <name>Expression Language related modules</name>
     <scm>
-        <connection>scm:svn:https://uel.dev.java.net/svn/branches/BuildImprovements-Jane-v3-uel</connection>
-        <developerConnection>scm:svn:https://uel.dev.java.net/svn/branches/BuildImprovements-Jane-v3-uel</developerConnection>
+        <connection>scm:svn:https://uel.dev.java.net/svn/tags/el-1.2</connection>
+        <developerConnection>scm:svn:https://uel.dev.java.net/svn/tags/el-1.2</developerConnection>
     </scm>
 
     <build>
