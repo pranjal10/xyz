@@ -8,6 +8,10 @@ he.org/maven-v4_0_0.xsd">
     <version>1.2</version>
     <packaging>pom</packaging>
     <name>Expression Language related modules</name>
+    <scm>
+        <connection>scm:svn:https://uel.dev.java.net/svn/branches/BuildImprovements-Jane-v3-uel</connection>
+        <developerConnection>scm:svn:https://uel.dev.java.net/svn/branches/BuildImprovements-Jane-v3-uel</developerConnection>
+    </scm>
 
     <build>
         <plugins>
