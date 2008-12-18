@@ -27,9 +27,8 @@ he.org/maven-v4_0_0.xsd">
         </extensions>
     </build>
     <scm>
-        <connection>scm:svn:https://uel.dev.java.net/svn/uel/trunk</connection>
-        <developerConnection>scm:svn:https://uel.dev.java.net/svn/uel/trunk</developerConnection>
-        <url>https://uel.dev.java.net/source/browse/uel/trunk/</url>
+        <connection>scm:svn:https://uel.dev.java.net/svn/uel/branches/BuildImprovements-Jane-v3-uel</connection>
+        <developerConnection>scm:svn:https://uel.dev.java.net/svn/uel/branches/BuildImprovements-Jane-v3-uel</developerConnection>
     </scm>
     <dependencyManagement>
         <dependencies>
