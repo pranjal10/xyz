@@ -87,8 +87,8 @@
         </mailingList>
     </mailingLists>
     <scm>
-        <connection>scm:svn:https://svn.java.net/svn/uel~svn/branches/1.1.2/api</connection>
-        <developerConnection>scm:svn:https://svn.java.net/svn/uel~svn/branches/1.1.2/api</developerConnection>
+        <connection>scm:svn:https://svn.java.net/svn/uel~svn/branches/1.1.3/api</connection>
+        <developerConnection>scm:svn:https://svn.java.net/svn/uel~svn/branches/1.1.3/api</developerConnection>
         <url>http://java.net/projects/uel/sources/svn/show</url>
     </scm>
 
