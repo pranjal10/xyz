@@ -1,31 +1,27 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
- *
+ * 
+ * Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
- * may not use this file except in compliance with the License.  You can
- * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
- * or packager/legal/LICENSE.txt.  See the License for the specific
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
- *
+ * 
  * When distributing the software, include this License Header Notice in each
- * file and include the License file at packager/legal/LICENSE.txt.
- *
- * GPL Classpath Exception:
- * Oracle designates this particular file as subject to the "Classpath"
- * exception as provided by Oracle in the GPL Version 2 section of the License
- * file that accompanied this code.
- *
- * Modifications:
- * If applicable, add the following below the License Header, with the fields
- * enclosed by brackets [] replaced by your own identifying information:
- * "Portions Copyright [year] [name of copyright owner]"
- *
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
+ * 
  * Contributor(s):
+ * 
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
  * elects to include this software in this distribution under the [CDDL or GPL
@@ -37,7 +33,6 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
 package com.sun.el.lang;
 
 import java.io.Externalizable;
@@ -61,7 +56,7 @@ public class FunctionMapperImpl extends FunctionMapper implements
 
     private static final long serialVersionUID = 1L;
     
-    protected Map<String, Function> functions = null;
+    protected Map functions = null;
 
     /*
      * (non-Javadoc)
@@ -71,7 +66,7 @@ public class FunctionMapperImpl extends FunctionMapper implements
      */
     public Method resolveFunction(String prefix, String localName) {
         if (this.functions != null) {
-            Function f = this.functions.get(prefix + ":" + localName);
+            Function f = (Function) this.functions.get(prefix + ":" + localName);
             return f.getMethod();
         }
         return null;
@@ -79,7 +74,7 @@ public class FunctionMapperImpl extends FunctionMapper implements
 
     public void addFunction(String prefix, String localName, Method m) {
         if (this.functions == null) {
-            this.functions = new HashMap<String, Function>();
+            this.functions = new HashMap();
         }
         Function f = new Function(prefix, localName, m);
         synchronized (this) {
@@ -101,11 +96,9 @@ public class FunctionMapperImpl extends FunctionMapper implements
      * 
      * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
      */
-    // Safe cast
-    @SuppressWarnings("unchecked")
     public void readExternal(ObjectInput in) throws IOException,
             ClassNotFoundException {
-        this.functions = (Map<String, Function>) in.readObject();
+        this.functions = (Map) in.readObject();
     }
     
     public static class Function implements Externalizable {
@@ -182,7 +175,7 @@ public class FunctionMapperImpl extends FunctionMapper implements
         public Method getMethod() {
             if (this.m == null) {
                 try {
-                    Class<?> t = Class.forName(this.owner, false,
+                    Class t = Class.forName(this.owner, false,
                                 Thread.currentThread().getContextClassLoader());
                     Class[] p = ReflectionUtil.toTypeArray(this.types);
                     this.m = t.getMethod(this.name, p);

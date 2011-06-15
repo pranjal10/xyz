@@ -1,31 +1,27 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
+ * Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
- * may not use this file except in compliance with the License.  You can
- * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
- * or packager/legal/LICENSE.txt.  See the License for the specific
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
  *
  * When distributing the software, include this License Header Notice in each
- * file and include the License file at packager/legal/LICENSE.txt.
- *
- * GPL Classpath Exception:
- * Oracle designates this particular file as subject to the "Classpath"
- * exception as provided by Oracle in the GPL Version 2 section of the License
- * file that accompanied this code.
- *
- * Modifications:
- * If applicable, add the following below the License Header, with the fields
- * enclosed by brackets [] replaced by your own identifying information:
- * "Portions Copyright [year] [name of copyright owner]"
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
  *
  * Contributor(s):
+ *
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
  * elects to include this software in this distribution under the [CDDL or GPL
@@ -55,6 +51,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
 
 package javax.el;
 
@@ -78,23 +75,18 @@ package javax.el;
  * so one is not needed to evaluate an expression using this class.  
  * However, the {@link ELContext} is needed at evaluation time.</p>
  *
- * <p>The {@link #getValue}, {@link #setValue}, {@link #isReadOnly},
- * {@link #getType} and {@link #getValueReference}
- * methods will evaluate the expression each time they are
+ * <p>The {@link #getValue}, {@link #setValue}, {@link #isReadOnly} and
+ * {@link #getType} methods will evaluate the expression each time they are
  * called. The {@link ELResolver} in the <code>ELContext</code> is used to 
  * resolve the top-level variables and to determine the behavior of the
- * <code>.</code> and <code>[]</code> operators. For any of the five methods,
+ * <code>.</code> and <code>[]</code> operators. For any of the four methods,
  * the {@link ELResolver#getValue} method is used to resolve all properties 
  * up to but excluding the last one. This provides the <code>base</code> 
- * object. For all methods other than the {@link #getValueReference} method,
- * at the last resolution, the <code>ValueExpression</code> will 
+ * object. At the last resolution, the <code>ValueExpression</code> will 
  * call the corresponding {@link ELResolver#getValue}, 
  * {@link ELResolver#setValue}, {@link ELResolver#isReadOnly} or 
  * {@link ELResolver#getType} method, depending on which was called on 
  * the <code>ValueExpression</code>.
- * For the {@link getValueReference} method, the (base, property) is
- * not resolved by the ELResolver, but an instance of {@link ValueReference}
- * is created to encapsulate this (base ,property), and returned.
  * </p>
  *
  * <p>See the notes about comparison, serialization and immutability in 
@@ -206,21 +198,4 @@ public abstract class ValueExpression
      *     that created this <code>ValueExpression</code>.
      */
     public abstract Class<?> getExpectedType();
-
-    /**
-     * Returns a {@link ValueReference} for this expression instance.
-     * @param context the context of this evaluation
-     * @return the <code>ValueReference</code> for this
-     * <code>ValueExpression</code>, or <code>null</code> if this
-     * <code>ValueExpression</code> is not a reference to
-     * a base (null or non-null) and a property.  
-     * If the base is null, and the property is a EL variable, return
-     * the <code>ValueReference</code> for the
-     * <code>ValueExpression</code> associated with this EL variable.
-     *
-     * @since EL 2.2
-     */
-    public ValueReference getValueReference(ELContext context) {
-        return null;
-    }
 }

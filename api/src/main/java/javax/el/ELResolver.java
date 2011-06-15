@@ -1,31 +1,27 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
+ * Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
- * may not use this file except in compliance with the License.  You can
- * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
- * or packager/legal/LICENSE.txt.  See the License for the specific
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
  *
  * When distributing the software, include this License Header Notice in each
- * file and include the License file at packager/legal/LICENSE.txt.
- *
- * GPL Classpath Exception:
- * Oracle designates this particular file as subject to the "Classpath"
- * exception as provided by Oracle in the GPL Version 2 section of the License
- * file that accompanied this code.
- *
- * Modifications:
- * If applicable, add the following below the License Header, with the fields
- * enclosed by brackets [] replaced by your own identifying information:
- * "Portions Copyright [year] [name of copyright owner]"
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
  *
  * Contributor(s):
+ *
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
  * elects to include this software in this distribution under the [CDDL or GPL
@@ -55,6 +51,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
 
 package javax.el;
 
@@ -62,13 +59,15 @@ import java.util.Iterator;
 import java.beans.FeatureDescriptor;
 
 /**
- * Enables customization of variable, property and method call resolution
- * behavior for EL expression evaluation.
+ * Enables customization of variable and property resolution behavior for EL
+ * expression evaluation.
  *
  * <p>While evaluating an expression, the <code>ELResolver</code> associated
  * with the {@link ELContext} is consulted to do the initial resolution of 
  * the first variable of an expression. It is also consulted when a 
- * <code>.</code> or <code>[]</code> operator is encountered.
+ * <code>.</code> or <code>[]</code> operator is encountered, except for the
+ * last such operator in a method expression, in which case the resultion
+ * rules are hard coded.</p>
  *
  * <p>For example, in the EL expression <code>${employee.lastName}</code>, 
  * the <code>ELResolver</code> determines what object <code>employee</code>
@@ -93,14 +92,6 @@ import java.beans.FeatureDescriptor;
  * <code>${y[x]}</code>, <code>base</code> is the result of the variable
  * resolution for <code>y</code> and <code>property</code> is the result of
  * the variable resolution for <code>x</code>.</p>
- *
- * <p>In the case of method call resolution, the <code>base</code> parameter
- * indentifies the base object and the <code>method</code> parameter identifies
- * a method on that base.  In the case of overloaded methods, the <code>
- * paramTypes</code> parameter can be optionally used to identify a method.
- * The <code>params</code>parameter are the parameters for the method call,
- * and can also be used for resolving overloaded methods when the
- * <code>paramTypes</code> parameter is not specified.
  *
  * <p>Though only a single <code>ELResolver</code> is associated with an
  * <code>ELContext</code>, there are usually multiple resolvers considered
@@ -180,52 +171,6 @@ public abstract class ELResolver {
     public abstract Object getValue(ELContext context,
                                     Object base,
                                     Object property);
-
-    /**
-     * Attemps to resolve and invoke the given <code>method</code> on the given
-     * <code>base</code> object.
-     *
-     * <p>If this resolver handles the given (base, method) pair,
-     * the <code>propertyResolved</code> property of the
-     * <code>ELContext</code> object must be set to <code>true</code>
-     * by the resolver, before returning. If this property is not
-     * <code>true</code> after this method is called, the caller should ignore
-     * the return value.</p>
-     *
-     * <p>A default implementation is provided that returns null so that
-     * existing classes that extend ELResolver can continue to function.</p>
-     *
-     * @param context The context of this evaluation.
-     * @param base The bean on which to invoke the method
-     * @param method The simple name of the method to invoke.
-     *     Will be coerced to a <code>String</code>.
-     * @param paramTypes An array of Class objects identifying the
-     *     method's formal parameter types, in declared order.
-     *     Use an empty array if the method has no parameters.
-     *     Can be <code>null</code>, in which case the method's formal
-     *     parameter types are assumed to be unknown. 
-     * @param params The parameters to pass to the method, or
-     *     <code>null</code> if no parameters.
-     * @return The result of the method invocation (<code>null</code> if
-     *     the method has a <code>void</code> return type).
-     * @throws MethodNotFoundException if no suitable method can be found.
-     * @throws ELException if an exception was thrown while performing
-     *     (base, method) resolution.  The thrown exception must be
-     *     included as the cause property of this exception, if
-     *     available.  If the exception thrown is an
-     *     <code>InvocationTargetException</code>, extract its
-     *     <code>cause</code> and pass it to the
-     *     <code>ELException</code> constructor.
-     * @since EL 2.2
-     */
-    public Object invoke(ELContext context,
-                         Object base,
-                         Object method,
-                         Class<?>[] paramTypes,
-                         Object[] params) {
-        return null;
-    }
-
 
     /**
      * For a given <code>base</code> and <code>property</code>, attempts to

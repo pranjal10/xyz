@@ -1,31 +1,27 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
- *
+ * 
+ * Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
- * may not use this file except in compliance with the License.  You can
- * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
- * or packager/legal/LICENSE.txt.  See the License for the specific
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
- *
+ * 
  * When distributing the software, include this License Header Notice in each
- * file and include the License file at packager/legal/LICENSE.txt.
- *
- * GPL Classpath Exception:
- * Oracle designates this particular file as subject to the "Classpath"
- * exception as provided by Oracle in the GPL Version 2 section of the License
- * file that accompanied this code.
- *
- * Modifications:
- * If applicable, add the following below the License Header, with the fields
- * enclosed by brackets [] replaced by your own identifying information:
- * "Portions Copyright [year] [name of copyright owner]"
- *
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
+ * 
  * Contributor(s):
+ * 
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
  * elects to include this software in this distribution under the [CDDL or GPL
@@ -37,7 +33,6 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
 package com.sun.el.util;
 
 import java.beans.IntrospectionException;
@@ -46,7 +41,6 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 import javax.el.ELException;
@@ -172,8 +166,8 @@ public class ReflectionUtil {
      * same method must be found in a superclass or interface.
      **/
 
-    static private Method getMethod(Class<?> cl, String methodName,
-                                    Class<?>[] paramTypes) {
+    static private Method getMethod(Class cl, String methodName,
+                                    Class[] paramTypes) {
 
         Method m = null;
         try {
@@ -182,7 +176,7 @@ public class ReflectionUtil {
             return null;
         }
 
-        Class<?> dclass  = m.getDeclaringClass();
+        Class dclass  = m.getDeclaringClass();
         if (Modifier.isPublic(dclass.getModifiers())) {
             return m;
         }
@@ -193,7 +187,7 @@ public class ReflectionUtil {
                 return m;
             }
         }
-        Class<?> c = dclass.getSuperclass();
+        Class c = dclass.getSuperclass();
         if (c != null) {
             m = getMethod(c, methodName, paramTypes);
             if (m != null) {
@@ -241,52 +235,5 @@ public class ReflectionUtil {
         }
         throw new PropertyNotFoundException(MessageFactory.get(
                 "error.property.notfound", base, name));
-    }
-
-    /*
-     * For now, find the first method that matches the name and the parameter
-     * count.
-     */
-    public static Method findMethod(Object base, Object property,
-                             Object[] params) throws ELException {
-
-        String methodName = property.toString();
-        for (Method m: base.getClass().getMethods()) {
-            if (m.getName().equals(methodName) && (
-                         m.isVarArgs() ||
-                         m.getParameterTypes().length==params.length)){
-                return m;
-            }
-        }
-        throw new ELException("Method " + methodName + " not Found");
-    }
-        
-    /**
-     * Invoke a method with parameters.
-     */
-    public static Object invokeMethod(Object base, Object property,
-                               Object[] params) throws ELException {
-
-        Method m = findMethod(base, property, params);
-        Class[] parameterTypes = m.getParameterTypes();
-        Object[] parameters = null;
-        if (parameterTypes.length > 0) {
-            if (m.isVarArgs()) {
-                // TODO
-            } else {
-                parameters = new Object[parameterTypes.length];
-                for (int i = 0; i < parameterTypes.length; i++) {
-                    parameters[i] = ELSupport.coerceToType(params[i],
-                                                           parameterTypes[i]);
-                }
-            }
-        }
-        try {
-            return m.invoke(base, parameters);
-        } catch (IllegalAccessException iae) {
-            throw new ELException(iae);
-        } catch (InvocationTargetException ite) {
-            throw new ELException(ite.getCause());
-        }
     }
 }

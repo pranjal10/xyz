@@ -1,31 +1,27 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
- *
+ * 
+ * Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
- * may not use this file except in compliance with the License.  You can
- * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
- * or packager/legal/LICENSE.txt.  See the License for the specific
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
- *
+ * 
  * When distributing the software, include this License Header Notice in each
- * file and include the License file at packager/legal/LICENSE.txt.
- *
- * GPL Classpath Exception:
- * Oracle designates this particular file as subject to the "Classpath"
- * exception as provided by Oracle in the GPL Version 2 section of the License
- * file that accompanied this code.
- *
- * Modifications:
- * If applicable, add the following below the License Header, with the fields
- * enclosed by brackets [] replaced by your own identifying information:
- * "Portions Copyright [year] [name of copyright owner]"
- *
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
+ * 
  * Contributor(s):
+ * 
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
  * elects to include this software in this distribution under the [CDDL or GPL
@@ -37,7 +33,6 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
 package com.sun.el.lang;
 
 import java.beans.PropertyEditor;
@@ -106,16 +101,10 @@ public class ELSupport {
             return coerceToString(obj0).compareTo(coerceToString(obj1));
         }
         if (obj0 instanceof Comparable) {
-            // Safe cast
-            @SuppressWarnings("unchecked")
-            Comparable<Object> cobj0 = (Comparable) obj0;
-            return (obj1 != null) ? cobj0.compareTo(obj1) : 1;
+            return (obj1 != null) ? ((Comparable) obj0).compareTo(obj1) : 1;
         }
         if (obj1 instanceof Comparable) {
-            // Safe cast
-            @SuppressWarnings("unchecked")
-            Comparable<Object> cobj1 = (Comparable) obj1;
-            return (obj0 != null) ? -(cobj1.compareTo(obj0)) : -1;
+            return (obj0 != null) ? -((Comparable) obj1).compareTo(obj0) : -1;
         }
         throw new ELException(MessageFactory.get("error.compare", obj0, obj1));
     }
@@ -190,10 +179,6 @@ public class ELSupport {
                 obj, obj.getClass(), Boolean.class));
     }
 
-    // Enum types are hard construct.   We can declare this as
-    // <T extends Enum<T>> T coerceToEnum(Object, Class<T> type)
-    // but this makes it harder to get the calls right.
-    @SuppressWarnings("unchecked")
     public final static Enum coerceToEnum(final Object obj, Class type) {
         if (obj == null || "".equals(obj)) {
             return null;
@@ -356,7 +341,7 @@ public class ELSupport {
         }
     }
 
-    public final static void checkType(final Object obj, final Class<?> type)
+    public final static void checkType(final Object obj, final Class type)
         throws IllegalArgumentException {
         if (String.class.equals(type)) {
             coerceToString(obj);
@@ -375,7 +360,7 @@ public class ELSupport {
         }
     }
 
-    public final static Object coerceToType(final Object obj, final Class<?> type)
+    public final static Object coerceToType(final Object obj, final Class type)
             throws IllegalArgumentException {
         if (type == null || Object.class.equals(type) ||
                 (obj != null && type.isAssignableFrom(obj.getClass()))) {

@@ -259,10 +259,7 @@ void ValueSuffix() : {}
  */
 void DotSuffix() : {}
 {
-        <DOT> (
-                        LOOKAHEAD(2) MethodSuffix()
-                 |      LOOKAHEAD(2) PropertySuffix()
-        )
+        <DOT> PropertySuffix()
 }
 
 /*
@@ -272,16 +269,6 @@ void DotSuffix() : {}
 void PropertySuffix() #PropertySuffix : { Token t = null; }
 {
         t=<IDENTIFIER> { jjtThis.setImage(t.image); }
-}
-
-/*
- * MethodSuffix
- * Method Suffix
- */
-void MethodSuffix() #MethodSuffix : { Token t = null; }
-{
-        t=<IDENTIFIER> { jjtThis.setImage(t.image); }
-        <LPAREN> (Expression() (<COMMA> Expression())*)? <RPAREN>
 }
 
 /*
